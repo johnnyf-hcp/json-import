@@ -1,0 +1,36 @@
+# This policy uses the Sentinel tfrun import to skip the rule check if it is in the workspace exemption list (json)
+
+##### Imports #####
+import "tfrun"
+import "rule1_exceptions"
+
+# For debugging
+print("List of Exempted Workspaces:", rule1_exceptions)
+for rule1_exceptions.data as item {
+    print("Workspace name:", item.name)
+}
+print("tfrun workspace name: ", tfrun.workspace.name)
+
+
+##### Functions #####
+# Check if workspace name is in exemption list
+check_if_exempted = func () {    
+    return any rule1_exceptions.data as item { item.name is tfrun.workspace.name}
+}
+
+if check_if_exempted() {
+    print("Workspace exempted: ", tfrun.workspace.name)
+    result = true
+} else {
+    # continue your check.  The section below simulates a fail result.
+    print("Rule 1 did not pass")
+    result = false
+}
+
+# main rule
+main = rule {
+    result
+}
+
+# For testing mocks, run using this command
+# sentinel test -verbose
