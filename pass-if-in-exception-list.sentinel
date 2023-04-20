@@ -23,7 +23,7 @@ if check_if_exempted() {
     result = true
 } else {
     # check if this is a destroy action
-    if tfrun.is_destroy is false {
+    if tfrun.is_destroy {
         print("Skipping check for destroy run")
         result = true
     } else {
