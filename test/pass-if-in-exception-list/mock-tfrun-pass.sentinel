@@ -1,6 +1,11 @@
 import "strings"
 import "types"
 
+speculative = false
+is_destroy = false
+refresh = true
+refresh_only = false
+
 workspace = {
 	"auto_apply":  false,
 	"description": null,

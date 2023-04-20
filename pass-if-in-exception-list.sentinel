@@ -22,9 +22,15 @@ if check_if_exempted() {
     print("Workspace exempted: ", tfrun.workspace.name)
     result = true
 } else {
-    # continue your check.  The section below simulates a fail result.
-    print("Rule 1 did not pass")
-    result = false
+    # check if this is a destroy action
+    if tfrun.is_destroy is false {
+        print("Skipping check for destroy run")
+        result = true
+    } else {
+        # continue your check.  The section below simulates a fail result.
+        print("Rule 1 did not pass")
+        result = false
+    }
 }
 
 # main rule
